@@ -132,6 +132,8 @@ const users = [
     },
 ];
 
+const {version} = require('../package.json');
+
 const siteConfig = {
     title: 'KaTeX',
     tagline: 'The fastest math typesetting library for the web',
@@ -145,6 +147,8 @@ const siteConfig = {
     headerLinks: [
         {href: '/#demo', label: 'Try'},
         {doc: 'node', label: 'Docs'},
+        // always link to the latest version page
+        {href: 'https://katex.org/versions.html', label: 'v' + version},
         {page: 'users', label: 'Users'},
         {href: 'https://github.com/KaTeX/KaTeX', label: 'GitHub'},
         {search: true},
@@ -191,7 +195,7 @@ const siteConfig = {
         apiKey: '46ecd80046d78d4e5d9a5c06f559dfaa',
         indexName: 'katex',
         algoliaOptions: {
-            facetFilters: ['language:LANGUAGE', 'version:VERSION'],
+            facetFilters: ['language:LANGUAGE'],
         },
     },
 
