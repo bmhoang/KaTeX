@@ -1,6 +1,9 @@
 version: 2.1
 
 executors:
+  node:
+    docker:
+      - image: circleci/node:10
   firefox:
     docker:
       - image: circleci/node:10
@@ -70,8 +73,7 @@ commands:
 
 jobs:
   test:
-    docker:
-      - image: circleci/node:10
+    executor: node
     steps:
       - run:
           name: Check whether the build is running on the main repository
@@ -122,6 +124,15 @@ jobs:
           path: test/screenshotter/diff
           destination: diff
 
+  release:
+    executor: node
+    steps:
+      - checkout_repo
+      - install_dependencies
+      - run:
+          name: Run semantic-release
+          command: yarn run semantic-release --debug
+
 workflows:
   test:
     jobs:
@@ -132,3 +143,8 @@ workflows:
       - screenshotter:
           name: chrome
           browser: chrome
+      - release:
+          requires:
+            - test
+            - firefox
+            - chrome
